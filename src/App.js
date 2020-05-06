@@ -20,15 +20,13 @@ class App extends Component {
       <Router>
         <Route exact path="/" component={Home} />
         <Route path="/course/:id" component={Course} />
-
         <Route path="/learning/:id" component={Learning} />
-
-        <Route path="/mycourse" component={MyCourse} />
 
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/forgot-password" component={Forgot} />
 
+        <Route path="/mycourse" component={MyCourse} />
         <Route path="/instructor" component={Instructor} />
         <Route path="/lecture/:id" component={Lecture} />
       </Router>

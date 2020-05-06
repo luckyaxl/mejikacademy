@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import Navbar from "../components/Navbar";
 
+import sharp from "../assets/images/sharp.svg";
+
+import {
+  sortableContainer,
+  sortableElement,
+  sortableHandle
+} from "react-sortable-hoc";
+import arrayMove from "array-move";
+
 import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
 
@@ -24,10 +33,14 @@ const AddLectures = ({ id }) => (
       return (
         <div className="d-flex">
           <div className="mr-3">
-            <img className="course-img img-card" src={data.course.cover} alt="..." />
+            <img
+              className="course-img img-card"
+              src={data.course.cover}
+              alt="..."
+            />
           </div>
           <div>
-            <div style={{ maxWidth: "70%" }}>
+            <div style={{ maxWidth: "90%" }}>
               <h5>{data.course.title}</h5>
               <p>{data.course.description}</p>
             </div>
@@ -41,7 +54,52 @@ const AddLectures = ({ id }) => (
   </Query>
 );
 
+const SortableContainer = sortableContainer(({ children }) => {
+  return <div>{children}</div>;
+});
+
+const DragHandle = sortableHandle(() => (
+  <span>
+    <img src={sharp} alt="..." />{" "}
+  </span>
+));
+
+const SortableItem = sortableElement(({ value, cancel }) => (
+  <div className="d-flex dnd-card mb-3 p-3 shadows justify-content-between">
+    <div className="d-flex align-items-center">
+      <DragHandle className="mr-3" />
+      <h6 className="m-0">{value}</h6>
+    </div>
+
+    <div className="d-flex align-items-center">
+      <button onClick={cancel} className="btn main-btn-outline mr-2">Cancel</button>
+      <button className="btn main-btn">Add Section</button>
+    </div>
+  </div>
+));
+
 class CourseCuriculum extends Component {
+  state = {
+    section: ["Section 1"]
+  };
+
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    this.setState(({ section }) => ({
+      section: arrayMove(section, oldIndex, newIndex)
+    }));
+  };
+
+  addSection = () => {
+    const key = this.state.section.length
+    let section = this.state.section;
+    section.push( `Section ${key + 1}` );
+    this.setState({ section });
+  };
+
+  cancel = (e) => {
+    console.log(e.target)
+  }
+
   render() {
     const id = this.props.match.params.id;
     return (
@@ -52,10 +110,23 @@ class CourseCuriculum extends Component {
             <AddLectures id={id} />
           </div>
           <div className="card p-3">
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex justify-content-between align-items-center mb-3">
               <h5>Curriculum</h5>
               <button className="btn main-btn">Submit Course</button>
             </div>
+            <SortableContainer onSortEnd={this.onSortEnd} useDragHandle>
+              {this.state.section.map((value, index) => (
+                <SortableItem
+                  key={`item-${value}`}
+                  index={index}
+                  value={value}
+                  cancel={this.cancel}
+                />
+              ))}
+            </SortableContainer>
+            <button onClick={this.addSection} className="btn add-new btn-block">
+              Add New Section
+            </button>
           </div>
         </div>
       </>

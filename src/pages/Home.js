@@ -19,9 +19,9 @@ const GET_COURSE = gql`
  
 const Courses = () => (
   <Query query={GET_COURSE}>
-    {({ loading, error, data }) => {
-      if (loading) return "Loading...";
+    {({ error, loading, data }) => {
       if (error) return `Error! ${error.message}`;
+      if (loading) return "Loading...";
 
       return (
         <>

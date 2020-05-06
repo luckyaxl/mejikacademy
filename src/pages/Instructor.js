@@ -8,38 +8,37 @@ import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
 
 const GET_COURSE = gql`
-  query courses($createdById: String!) {
-    courses(where: { id: $createdById }) {
+  {
+    courses(orderBy: createdAt_DESC) {
       id
       title
       cover
+      description
+      createdAt
     }
   }
 `;
 
-const List = ({ createdById }) => (
-  <Query query={GET_COURSE} variables={{ createdById }}>
-    {(loading, error, data) => {
-      if (loading) return "Loading...";
+const List = () => (
+  <Query query={GET_COURSE}>
+    {({ error, loading, data }) => {
       if (error) return `Error! ${error.message}`;
+      if (loading) return "Loading...";
 
       return (
         <>
           {data.courses.map((course, id) => (
             <div className="col-6 col-lg-3 px-2 mb-3" key={id}>
-              <Link to={`/course/${course.id}`}>
+              <Link to={`/lecture/${course.id}`}>
                 <div className="course-card">
                   <img
                     className="course-img"
-                    src={
-                      course.cover ||
-                      "https://udemycouponcodes.com/wp-content/uploads/2018/09/node-with-react.jpg"
-                    }
+                    src={course.cover || "https://udemycouponcodes.com/wp-content/uploads/2018/09/node-with-react.jpg"}
                     alt="..."
                   />
                   <div className="desc">
                     <h6>{course.title}</h6>
-                    <p className="mb-0">{course.description}</p>
+                    <p className="mb-0">{course.description || "no descriptions"}</p>
                   </div>
                 </div>
               </Link>
@@ -88,7 +87,7 @@ class Instructor extends Component {
             </button>
           </div>
           <div className="row px-2">
-            <List createdById={'5eb26541a0005300baa9c5bf'} />
+            <List />
           </div>
         </div>
       </>

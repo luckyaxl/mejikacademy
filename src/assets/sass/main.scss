@@ -431,3 +431,23 @@ a:hover {
     font-size: 14px;
   }
 }
+
+/*******************************************/
+
+.dnd-card {
+  background: #F9F9F9;
+  border-radius: 8px;
+  height: 52px;
+}
+
+.add-new {
+  background-color: #FBFBFC;
+  height: 55px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #8854D0;
+
+  &:hover {
+    background: darken(#FBFBFC, 4%)
+  }
+}

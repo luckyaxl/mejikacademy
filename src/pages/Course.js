@@ -78,7 +78,7 @@ class Course extends Component {
                   <div className="row">
                     <div className="col-lg-7 mb-3">
                       <div>
-                        <h4>{data.course.title}</h4>
+                        <h5>{data.course.title}</h5>
                         <p>{data.course.description}</p>
                       </div>
                       <button
