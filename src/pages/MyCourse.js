@@ -2,6 +2,21 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
+import { Query } from "@apollo/react-components";
+import gql from "graphql-tag";
+
+const GET_COURSE = gql`
+  query course($id: String!) {
+    course(id: $id) {
+      id
+      title
+      cover
+      description
+      createdAt
+    }
+  }
+`;
+
 class MyCourse extends Component {
   render() {
     return (
@@ -10,7 +25,7 @@ class MyCourse extends Component {
         <div className="home container main-content">
           <div className="row px-2">
             <div className="col-6 col-lg-3 px-2 mb-3">
-              <Link to="/course/lectures/1">
+              <Link to="/courses/">
                 <div className="course-card">
                   <img
                     className="course-img"

@@ -16,7 +16,7 @@ const GET_COURSE = gql`
     }
   }
 `;
-
+ 
 const Courses = () => (
   <Query query={GET_COURSE}>
     {({ loading, error, data }) => {
@@ -31,12 +31,12 @@ const Courses = () => (
                 <div className="course-card">
                   <img
                     className="course-img"
-                    src="https://udemycouponcodes.com/wp-content/uploads/2018/09/node-with-react.jpg"
+                    src={course.cover || "https://udemycouponcodes.com/wp-content/uploads/2018/09/node-with-react.jpg"}
                     alt="..."
                   />
                   <div className="desc">
                     <h6>{course.title}</h6>
-                    <p className="mb-0">{course.description}</p>
+                    <p className="mb-0">{course.description || "no descriptions"}</p>
                   </div>
                 </div>
               </Link>

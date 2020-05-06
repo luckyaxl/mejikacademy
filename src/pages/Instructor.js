@@ -4,6 +4,53 @@ import Navbar from "../components/Navbar";
 import Add from "../components/AddCourse";
 import Empty from "../components/EmptyCourse";
 
+import { Query } from "@apollo/react-components";
+import gql from "graphql-tag";
+
+const GET_COURSE = gql`
+  query courses($createdById: String!) {
+    courses(where: { id: $createdById }) {
+      id
+      title
+      cover
+    }
+  }
+`;
+
+const List = ({ createdById }) => (
+  <Query query={GET_COURSE} variables={{ createdById }}>
+    {(loading, error, data) => {
+      if (loading) return "Loading...";
+      if (error) return `Error! ${error.message}`;
+
+      return (
+        <>
+          {data.courses.map((course, id) => (
+            <div className="col-6 col-lg-3 px-2 mb-3" key={id}>
+              <Link to={`/course/${course.id}`}>
+                <div className="course-card">
+                  <img
+                    className="course-img"
+                    src={
+                      course.cover ||
+                      "https://udemycouponcodes.com/wp-content/uploads/2018/09/node-with-react.jpg"
+                    }
+                    alt="..."
+                  />
+                  <div className="desc">
+                    <h6>{course.title}</h6>
+                    <p className="mb-0">{course.description}</p>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </>
+      );
+    }}
+  </Query>
+);
+
 class Instructor extends Component {
   constructor(props) {
     super(props);
@@ -41,35 +88,7 @@ class Instructor extends Component {
             </button>
           </div>
           <div className="row px-2">
-            <div className="col-6 col-lg-3 px-2 mb-3">
-              <Link to="/lecture">
-                <div className="course-card">
-                  <img
-                    className="course-img"
-                    src="https://udemycouponcodes.com/wp-content/uploads/2018/09/node-with-react.jpg"
-                    alt="..."
-                  />
-                  <div className="desc">
-                    <h6>Node with React: Fullstack joej powe weij wepoj</h6>
-                    <p className="mb-0">lkjsdlfkjlsdf...</p>
-                  </div>
-                </div>
-              </Link>
-            </div>
-
-            <div className="col-6 col-lg-3 px-2 mb-3">
-              <div className="course-card">
-                <img
-                  className="course-img"
-                  src="https://miro.medium.com/max/1400/1*Qs-62pzrntZoFqRouAvTgg.png"
-                  alt="..."
-                />
-                <div className="desc">
-                  <h6>Node with React: Fullstack joej powe weij wepoj</h6>
-                  <p className="mb-0">lkjsdlfkjlsdf...</p>
-                </div>
-              </div>
-            </div>
+            <List createdById={'5eb26541a0005300baa9c5bf'} />
           </div>
         </div>
       </>

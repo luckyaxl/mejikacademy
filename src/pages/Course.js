@@ -1,70 +1,138 @@
 import React, { Component } from "react";
-import ReactPlayer from "react-player";
+
 import Navbar from "../components/Navbar";
+import Accordion from "../components/Accordion2";
 
-import AccordionItem from "../components/AccordionItem";
+import { Query } from "@apollo/react-components";
+import gql from "graphql-tag";
+import { getToken } from "../utils/auth";
 
-const paragraph = "What You'll Get in This Course";
-
-const data = [
-  {
-    title: "Front-End Web Development",
-    paragraph
-  },
-  {
-    title: "How to apply",
-    paragraph
-  },
-  {
-    title: "Purchasing process",
-    paragraph
-  },
-  {
-    title: "Usage guides",
-    paragraph
+const GET_COURSE = gql`
+  query course($id: String!) {
+    course(id: $id) {
+      id
+      title
+      cover
+      description
+      createdAt
+    }
   }
-];
+`;
 
 class Course extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      block1: true,
+      block2: false,
+      block3: false,
+      expand: false,
+      loading: false
+    };
+  }
+
+  toggle = index => () => {
+    this.setState({ [`block${index}`]: !this.state[`block${index}`] });
+  };
+
+  toggleExpand = expand => () => {
+    this.setState({
+      block1: expand,
+      block2: expand,
+      block3: expand,
+      expand: expand
+    });
+  };
+
+  handleClick = (e) => {
+    //Require Auth Token
+    const status = getToken();
+    const id = e.target.id
+    if (status) {
+      this.props.history.push(`/learning/${id}`);
+    } else {
+      this.props.history.push("/login");
+    }
+  };
+
   render() {
+    const accordionList = [
+      { title: "Front End Development" },
+      { title: "Introduction HTML" },
+      { title: "Intermediate HTML" }
+    ];
+
+    const id = this.props.match.params.id;
+
     return (
       <>
         <Navbar />
         <div className="main-content container">
-          <div className="row">
-            <div className="col-lg-8">
-              <div className="fixcard">
-                <div className="shadows mb-3">
-                  <ReactPlayer className="mv-player" width="100%" playing />
-                </div>
-                <div style={{ maxWidth: "90%" }}>
-                  <h5>What You'll get in this Course</h5>
-                  <p>
-                    Become a full-stack web developer with just one course.
-                    HTML, CSS, Javascript, Node, React, MongoDB and more!
-                  </p>
-                </div>
+          <div className="card p-4 mb-3">
+            <Query query={GET_COURSE} variables={{ id }}>
+              {({ loading, error, data }) => {
+                if (loading) return "Loading...";
+                if (error) return `Error! ${error.message}`;
+
+                return (
+                  <div className="row">
+                    <div className="col-lg-7 mb-3">
+                      <div>
+                        <h4>{data.course.title}</h4>
+                        <p>{data.course.description}</p>
+                      </div>
+                      <button
+                        id={id}
+                        onClick={this.handleClick}
+                        className="btn main-btn mt-3"
+                      >
+                        Enroll This Course
+                      </button>
+                    </div>
+                    <div className="col">
+                      <img
+                        className="img-fluid card"
+                        src={
+                          data.course.cover ||
+                          "https://i.ytimg.com/vi/DLX62G4lc44/maxresdefault.jpg"
+                        }
+                        alt="..."
+                      />
+                    </div>
+                  </div>
+                );
+              }}
+            </Query>
+          </div>
+          <div className="card p-4">
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h5 className="mb-0">Course Content</h5>
+              <div className="d-flex align-items-center">
+                <button
+                  onClick={this.toggleExpand(!this.state.expand)}
+                  className="btn btn-link p-0 mr-3"
+                >
+                  <small>
+                    {this.state.expand ? "Collapse All" : "Expand all"}
+                  </small>
+                </button>
+                <small>210 lectures</small>
               </div>
             </div>
-            <div className="col">
-              <div>
-                <div className="wrapper">
-                  <ul className="accordion-list">
-                    <div className="p-3">
-                      <h5 className="mb-0" style={{ fontSize: 18 }}>
-                        Course Content
-                      </h5>
-                    </div>
-                    {data.map((data, key) => {
-                      return (
-                        <li className="accordion-list__item" key={key}>
-                          <AccordionItem {...data} />
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
+            <div>
+              <div className="accordion">
+                {accordionList.map((item, index) => (
+                  <Accordion
+                    key={index}
+                    title={item.title}
+                    onClick={this.toggle(index + 1)}
+                    expand={this.state[`block${index + 1}`]}
+                  />
+                ))}
               </div>
+              <button className="btn btn-loadmore btn-block">
+                17 more section
+              </button>
             </div>
           </div>
         </div>

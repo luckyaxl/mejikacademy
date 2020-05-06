@@ -13,7 +13,6 @@ import eyesopn from "../../assets/images/eyesopn.svg";
 import { Mutation } from "@apollo/react-components";
 import { setToken } from "../../config";
 import { validateEmail } from "../../utils/validate";
-//import Cookies from "js-cookie";
 
 import gql from "graphql-tag";
 
@@ -21,6 +20,9 @@ const LOGIN = gql`
   mutation login($email: EmailAddress!, $password: String) {
     login(input: { email: $email, password: $password }) {
       token
+      user {
+        role
+      }
     }
   }
 `;
@@ -60,8 +62,9 @@ class Login extends Component {
           variables
         });
         const token = data.data.login.token;
-        setToken(token);
-        //Cookies.set("userId", "1", { expires: 7 });
+        const role = data.data.login.user.role;
+        console.log(role)
+        setToken(token, role);
         this.props.history.replace("/");
       } else {
         console.log("Invalid Email");
@@ -162,7 +165,7 @@ class Login extends Component {
                             </label>
                           </div>
                           <Link to="/forgot-password">
-                            <button className="btn btn-link small p-0 text-warning">
+                            <button type="button" className="btn btn-link small p-0 text-warning">
                               <small>Forgotten your password</small>
                             </button>
                           </Link>
@@ -184,7 +187,7 @@ class Login extends Component {
                             Don't have an account yet?{" "}
                           </small>
                           <Link to="/register">
-                            <button className="btn btn-link text-warning p-0">
+                            <button type="button" className="btn btn-link text-warning p-0">
                               <small className="bold">Register here</small>
                             </button>
                           </Link>

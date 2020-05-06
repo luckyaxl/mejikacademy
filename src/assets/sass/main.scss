@@ -1,9 +1,10 @@
+@import "./dropdown.scss";
 @import "./accordion.scss";
 @import "./accordion2.scss";
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1000px;
+    max-width: 1100px;
   }
 }
 
@@ -201,6 +202,14 @@ span {
   color: #ddd;
 }
 
+.titlebar {
+  margin-left: 80px;
+  padding-left: 20px;
+  border-radius: 4px;
+  height: 35px;
+  outline: none;
+}
+
 /********************************************/
 
 .loader {
@@ -379,7 +388,7 @@ a:hover {
 @media only screen and (min-width: 900px) {
   .fixcard {
     position: fixed;
-    width: 650px;
+    width: 720px;
   }
 
   .content-pl {
@@ -399,4 +408,26 @@ a:hover {
   height: 35px;
   width: 35px;
   border-radius: 45px;
+}
+
+/***************************************/
+
+.covers {
+  cursor: pointer;
+  width: 182px;
+  height: 106px;
+  border-radius: 4px;
+  border: 1px solid #8854d0;
+  box-shadow: 0px 0px 40px rgba(255, 255, 255, 0.12);
+  text-align: center;
+  padding-top: 20px;
+  input {
+    display: none;
+  }
+
+  p {
+    margin-top: 10px;
+    color: #8854d0;
+    font-size: 14px;
+  }
 }

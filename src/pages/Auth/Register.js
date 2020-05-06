@@ -28,6 +28,9 @@ const REGISTER = gql`
       }
     ) {
       token
+      user {
+        role
+      }
     }
   }
 `;
@@ -48,7 +51,7 @@ class Register extends Component {
         lastName: "",
         phoneNumber: ""
       }
-    }; 
+    };
   }
 
   componentDidMount() {
@@ -72,7 +75,8 @@ class Register extends Component {
           variables
         });
         const token = data.data.register.token;
-        setToken(token);
+        const role = data.data.register.user.role;
+        setToken(token, role);
         this.props.history.replace("/");
       } else {
         console.log("Invalid Email");
@@ -195,7 +199,7 @@ class Register extends Component {
                             placeholder="e.g 087826123***"
                             type="tel"
                           />
-                        </div>                        
+                        </div>
 
                         <div className="text-center">
                           <button
@@ -222,7 +226,6 @@ class Register extends Component {
                       </form>
                     )}
                   </Mutation>
-
                 </div>
               </div>
             </div>

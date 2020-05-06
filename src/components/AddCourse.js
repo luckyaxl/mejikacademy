@@ -1,17 +1,14 @@
+/** Docs https://www.apollographql.com/docs/react/networking/authentication/#header */
+
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
-
-import Dropzone from "react-dropzone";
+import upload from "../assets/images/upload.svg";
 
 import { Mutation } from "@apollo/react-components";
 import gql from "graphql-tag";
 
 const CREATE = gql`
-  mutation createCourse(
-    $title: String!
-    $cover: Upload
-    $description: String
-  ) {
+  mutation createCourse($title: String!, $cover: Upload, $description: String) {
     createCourse(
       input: { title: $title, cover: $cover, description: $description }
     ) {
@@ -27,6 +24,7 @@ class AddCourse extends Component {
     super(props);
     this.state = {
       select: false,
+      preview: "",
       data: {
         title: "",
         cover: null,
@@ -47,35 +45,36 @@ class AddCourse extends Component {
     const { data } = this.state;
     this.setState({
       data: { ...data, cover: event.target.files[0] },
-      select: !this.state.select
+      select: !this.state.select,
+      preview: URL.createObjectURL(event.target.files[0])
     });
   };
 
   handleSubmit = async (createCourse, e) => {
     e.preventDefault();
     this.setState({ loading: true });
-
-    const variables = this.state.data;
     try {
-      if (variables.cover !== "") {
-        const data = await createCourse({
-          variables
-        });
-        console.log(data);
-        this.props.history.replace("/curriculum");
-      } else {
-        console.error(
-          `not an image, the image file is a ${typeof variables.cover}`
-        );
-      }
+      const variables = this.state.data;
+      const data = await createCourse({
+        variables
+      });
+      const id = data.data.createCourse.id;
+      window.location.href = `/lecture/${id}`;
     } catch (error) {
-      console.log("Failed To Create");
+      console.log(error);
       this.setState({ loading: false });
     }
   };
 
   onDrop = acceptedFiles => {
     console.log(acceptedFiles);
+
+    const { data } = this.state;
+    this.setState({
+      data: { ...data, cover: acceptedFiles },
+      select: !this.state.select,
+      preview: URL.createObjectURL(acceptedFiles)
+    });
   };
 
   render() {
@@ -113,33 +112,25 @@ class AddCourse extends Component {
                     type="text"
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group inputDnD">
                   <label className="small bold">Cover</label>
                   <br />
                   {!this.state.select ? (
-                    <input
-                      className="upload-img"
-                      type="file"
-                      onChange={this.handleFile}
-                      encType='multipart/form-data'
-                    />
+                    <>
+                      <label className="covers" htmlFor="upload">
+                        <img src={upload} alt="..." />
+                        <p>Upload Cover Here</p>
+                        <input
+                          id="upload"
+                          type="file"
+                          onChange={this.handleFile}
+                          encType="multipart/form-data"
+                        />
+                      </label>
+                    </>
                   ) : (
-                    <img
-                      className="course-img"
-                      src={state.data.cover}
-                      alt="..."
-                    />
+                    <img className="course-img" src={state.preview} alt="..." />
                   )}
-                </div>
-                <div className="form-group">
-                  <Dropzone onDrop={this.onDrop}>
-                    {({ getRootProps, getInputProps }) => (
-                      <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        Click me to upload a file!
-                      </div>
-                    )}
-                  </Dropzone>
                 </div>
                 <div className="d-flex float-right">
                   <button
@@ -150,7 +141,8 @@ class AddCourse extends Component {
                     Cancel
                   </button>
                   <button type="submit" className="btn main-btn">
-                    Create Course
+                    {this.state.loading && <div className="loader"></div>}
+                    {!this.state.loading && <span>Create Course</span>}
                   </button>
                 </div>
               </form>

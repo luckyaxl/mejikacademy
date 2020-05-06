@@ -1,3 +1,6 @@
+/** Docs https://www.apollographql.com/docs/react/networking/authentication/#header */
+
+
 import React from "react";
 import ReactDOM from "react-dom";
 

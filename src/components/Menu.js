@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Profile from "./Dropdown/Profile";
 
 class Menu extends Component {
+  componentDidMount() {
+    localStorage.setItem("student", true);
+  }
+
   handleClick = () => {
-    localStorage.setItem("role", "instructor");
+    const student = localStorage.getItem("student");
   };
 
   render() {
-    const role = localStorage.getItem("role");
-    const instructor = role === "instructor";
+    const student = localStorage.getItem("student");
+    //console.log(student)
 
     return (
       <div className="d-flex lectures">
@@ -16,21 +21,15 @@ class Menu extends Component {
           <button className="btn btn-link mr-3 text-dark">My Course</button>
         </Link>
 
-        <Link to={instructor ? "/instructor" : "/mycourse"}>
+        <Link to={student ? "/mycourse" : "/instructor"}>
           <button
             onClick={this.handleClick}
             className="btn main-btn-outline mr-3"
           >
-            {instructor
-              ? "Switch to Student  View"
-              : "Switch to Insructor  View"}
+            {student ? "Switch to Intructor View" : "Switch to Student View"}
           </button>
         </Link>
-        <img
-          className="profile"
-          src="https://pngimage.net/wp-content/uploads/2018/06/user-png-images-4.png"
-          alt="..."
-        />
+        <Profile />
       </div>
     );
   }
