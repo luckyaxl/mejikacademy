@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
-import logo from "../assets/images/logo.svg";
+import logo from "../../assets/images/logo.svg";
 
 class Forgot extends Component {
   state = {

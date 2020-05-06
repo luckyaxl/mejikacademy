@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Add from "../components/ModalAdd";
+import Add from "./AddCourse";
 
 class EmptyCourse extends Component {
   state = {

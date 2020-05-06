@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Add from "../components/ModalAdd";
+import Add from "../components/AddCourse";
 import Empty from "../components/EmptyCourse";
 
 class Instructor extends Component {
@@ -42,7 +42,7 @@ class Instructor extends Component {
           </div>
           <div className="row px-2">
             <div className="col-6 col-lg-3 px-2 mb-3">
-              <Link to="/curriculum">
+              <Link to="/lecture">
                 <div className="course-card">
                   <img
                     className="course-img"

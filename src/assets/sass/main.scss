@@ -1,6 +1,12 @@
 @import "./accordion.scss";
 @import "./accordion2.scss";
 
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1000px;
+  }
+}
+
 @font-face {
   font-family: "Product Sans Medium";
   font-style: normal;
@@ -27,7 +33,7 @@
 }
 
 body {
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
   ::placeholder {
     font-size: medium;
   }
@@ -139,7 +145,6 @@ span {
   padding: 0 10px 0 10px;
   margin: 3px;
 }
-
 
 .forms {
   color: white;
@@ -257,7 +262,6 @@ span {
 .custom-map-modal {
   .modal-dialog {
     width: 350px;
-    margin: auto;
   }
 }
 
@@ -375,10 +379,10 @@ a:hover {
 @media only screen and (min-width: 900px) {
   .fixcard {
     position: fixed;
-    width: 740px;
+    width: 650px;
   }
 
-  .content-pl{
+  .content-pl {
     padding-left: 25px;
   }
 }
@@ -388,4 +392,11 @@ a:hover {
   height: 55px;
   font-size: 14px;
   font-weight: bold;
+}
+
+/**************************************************/
+.profile {
+  height: 35px;
+  width: 35px;
+  border-radius: 45px;
 }

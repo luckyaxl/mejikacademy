@@ -2,12 +2,55 @@ import React, { Component } from "react";
 import Navbar from "../components/Navbar";
 import Accordion from "../components/Accordion2";
 
+import { Query } from "@apollo/react-components";
+import gql from "graphql-tag";
+
+const GET_COURSE = gql`
+  query course($id: String!) {
+    course(id: $id) {
+      id
+      title
+      cover
+      description
+      createdAt
+    }
+  }
+`;
+
+const Detail = ({ id }) => (
+  <Query query={GET_COURSE} variables={{ id }}>
+    {({ loading, error, data }) => {
+      if (loading) return "Loading...";
+      if (error) return `Error! ${error.message}`;
+
+      return (
+        <div className="row">
+          <div className="col-lg-7 mb-3">
+            <div>
+              <h4>{data.course.title}</h4>
+              <p>{data.course.description}</p>
+            </div>
+            <button className="btn main-btn mt-3">Enroll This Course</button>
+          </div>
+          <div className="col">
+            <img
+              className="img-fluid card"
+              src="https://i.ytimg.com/vi/DLX62G4lc44/maxresdefault.jpg"
+              alt="..."
+            />
+          </div>
+        </div>
+      );
+    }}
+  </Query>
+);
+
 class DetailCourse extends Component {
   constructor(props) {
     super(props);
     this.state = {
       block1: true,
-      block2: false, 
+      block2: false,
       block3: false,
       expand: false
     };
@@ -33,32 +76,14 @@ class DetailCourse extends Component {
       { title: "Intermediate HTML" }
     ];
 
+    const id = this.props.match.params.id;
+
     return (
       <>
         <Navbar />
         <div className="main-content container">
           <div className="card p-4 mb-3">
-            <div className="row">
-              <div className="col-lg-7 mb-3">
-                <div>
-                  <h4>Node with React: Fullstack Web Development</h4>
-                  <p>
-                    Become a full-stack web developer with just one course.
-                    HTML, CSS, Javascript, Node, React, MongoDB and more
-                  </p>
-                </div>
-                <button className="btn main-btn mt-3">
-                  Enroll This Course
-                </button>
-              </div>
-              <div className="col">
-                <img
-                  className="img-fluid card"
-                  src="https://i.ytimg.com/vi/DLX62G4lc44/maxresdefault.jpg"
-                  alt="..."
-                />
-              </div>
-            </div>
+            <Detail id={id} />
           </div>
           <div className="card p-4">
             <div className="d-flex justify-content-between align-items-center mb-3">
@@ -86,7 +111,9 @@ class DetailCourse extends Component {
                   />
                 ))}
               </div>
-              <button className="btn btn-loadmore btn-block">17 more section</button>
+              <button className="btn btn-loadmore btn-block">
+                17 more section
+              </button>
             </div>
           </div>
         </div>

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import logosm from "../assets/images/logo-sm.svg";
 //import search from "../assets/images/search.svg";
 
+import Menu from "./Menu";
+
 class Navbar extends Component {
   render() {
     return (
@@ -17,6 +19,8 @@ class Navbar extends Component {
             placeholder="Search Course Here"
           />
         </div>
+        <Menu/>
+        {/**
         <div className="d-flex align-items-center lectures">
           <Link to="/login">
             <button className="btn main-btn-outline mr-2">Login</button>
@@ -25,6 +29,7 @@ class Navbar extends Component {
             <button className="btn main-btn">Register</button>
           </Link>
         </div>
+         */}
       </nav>
     );
   }

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import Splash from "../components/Splash";
-import logo from "../assets/images/logo.svg";
-import eyes from "../assets/images/eyes.svg";
-import eyesopn from "../assets/images/eyesopn.svg";
+import Splash from "../../components/Splash";
+import logo from "../../assets/images/logo.svg";
+import eyes from "../../assets/images/eyes.svg";
+import eyesopn from "../../assets/images/eyesopn.svg";
 
 import { Mutation } from "@apollo/react-components";
-import { setToken } from "../config";
-import { validateEmail } from "../utils/validate";
+import { setToken } from "../../config";
+import { validateEmail } from "../../utils/validate";
 import gql from "graphql-tag";
 
 const REGISTER = gql`

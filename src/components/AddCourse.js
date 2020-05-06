@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 
+import Dropzone from "react-dropzone";
+
 import { Mutation } from "@apollo/react-components";
 import gql from "graphql-tag";
 
 const CREATE = gql`
   mutation createCourse(
     $title: String!
-    $cover: Upload!
-    $description: String!
+    $cover: Upload
+    $description: String
   ) {
     createCourse(
       input: { title: $title, cover: $cover, description: $description }
@@ -20,15 +22,14 @@ const CREATE = gql`
   }
 `;
 
-class ModalAdd extends Component {
+class AddCourse extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null,
       select: false,
       data: {
         title: "",
-        cover: "",
+        cover: null,
         description: ""
       }
     };
@@ -43,12 +44,11 @@ class ModalAdd extends Component {
   };
 
   handleFile = event => {
-    
+    const { data } = this.state;
     this.setState({
-      data: { cover: URL.createObjectURL(event.target.files[0]) }
+      data: { ...data, cover: event.target.files[0] },
+      select: !this.state.select
     });
-
-    console.log(this.state.data.cover)
   };
 
   handleSubmit = async (createCourse, e) => {
@@ -56,15 +56,12 @@ class ModalAdd extends Component {
     this.setState({ loading: true });
 
     const variables = this.state.data;
-
-    console.log(variables.cover)
-
     try {
       if (variables.cover !== "") {
         const data = await createCourse({
           variables
         });
-        console.log(data)
+        console.log(data);
         this.props.history.replace("/curriculum");
       } else {
         console.error(
@@ -77,8 +74,14 @@ class ModalAdd extends Component {
     }
   };
 
+  onDrop = acceptedFiles => {
+    console.log(acceptedFiles);
+  };
+
   render() {
     const { state } = this;
+
+    console.log(this.state.data);
     return (
       <Modal centered {...this.props} className="custom-map-modal">
         <div className="p-3">
@@ -118,6 +121,7 @@ class ModalAdd extends Component {
                       className="upload-img"
                       type="file"
                       onChange={this.handleFile}
+                      encType='multipart/form-data'
                     />
                   ) : (
                     <img
@@ -126,6 +130,16 @@ class ModalAdd extends Component {
                       alt="..."
                     />
                   )}
+                </div>
+                <div className="form-group">
+                  <Dropzone onDrop={this.onDrop}>
+                    {({ getRootProps, getInputProps }) => (
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        Click me to upload a file!
+                      </div>
+                    )}
+                  </Dropzone>
                 </div>
                 <div className="d-flex float-right">
                   <button
@@ -148,4 +162,4 @@ class ModalAdd extends Component {
   }
 }
 
-export default ModalAdd;
+export default AddCourse;
