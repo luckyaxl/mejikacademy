@@ -3,22 +3,8 @@
 import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import upload from "../assets/images/upload.svg";
-
 import { Mutation } from "@apollo/react-components";
 import gql from "graphql-tag";
-
-const CREATE = gql`
-  mutation createCourse($title: String!, $cover: Upload, $description: String) {
-    createCourse(
-      input: { title: $title, cover: $cover, description: $description }
-    ) {
-      id
-      title
-      cover
-      description
-    }
-  }
-`;
 
 class AddCourse extends Component {
   constructor(props) {
@@ -102,11 +88,11 @@ class AddCourse extends Component {
                 </div>
                 <div className="form-group">
                   <label className="small bold">Description</label>
-                  <textarea 
+                  <textarea
                     name="description"
                     onChange={this.handleChange}
                     value={state.data.description}
-                    style={{ paddingTop: 10, height: 100, resize: 'none' }}
+                    style={{ paddingTop: 10, height: 100, resize: "none" }}
                     className="main-form"
                     placeholder="Briefly describe this course.."
                     type="text"
@@ -153,5 +139,18 @@ class AddCourse extends Component {
     );
   }
 }
+
+const CREATE = gql`
+  mutation createCourse($title: String!, $cover: Upload, $description: String) {
+    createCourse(
+      input: { title: $title, cover: $cover, description: $description }
+    ) {
+      id
+      title
+      cover
+      description
+    }
+  }
+`;
 
 export default AddCourse;

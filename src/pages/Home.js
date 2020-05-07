@@ -12,7 +12,7 @@ class Home extends Component {
     return (
       <>
         <Navbar />
-        <div className="home container main-content">
+        <div className="container main-content">
           <div className="row px-2">
             <Query query={GET_COURSE}>
               {({ error, loading, data }) => {
@@ -56,7 +56,7 @@ class Home extends Component {
 
 const GET_COURSE = gql`
   {
-    courses(orderBy: createdAt_DESC, limit: 50) {
+    courses(orderBy: createdAt_DESC) {
       id
       title
       cover
