@@ -35,9 +35,6 @@
 
 body {
   background-color: #f9f9f9;
-  ::placeholder {
-    font-size: medium;
-  }
 }
 
 * {
@@ -445,6 +442,15 @@ a:hover {
   border: 1px solid #f0f2f5;
   margin: 10px;
   padding: 10px;
+
+  ::placeholder {
+    font-size: 14px;
+    font-family: "Product Sans Regular";
+  }
+
+  label {
+    font-size: 13px;
+  }
 }
 
 .add-new {
@@ -461,10 +467,19 @@ a:hover {
 
 .lecture-input {
   border: 1px solid transparent;
-  padding-left: 20px;
+  padding-left: 10px;
   background: #f0f2f5;
   border-radius: 4px;
   height: 35px;
   width: 100%;
   outline: none;
+}
+
+.btn-addmore {
+  background: #f0f2f5;
+  border: 1px solid #f0f2f5;
+  border-radius: 4px;
+  &:hover {
+    background: darken(#f0f2f5, 4%);
+  }
 }

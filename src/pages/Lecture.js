@@ -66,7 +66,7 @@ const DragHandle = sortableHandle(() => (
 
 const Section = sortableElement(({ value, cancel, children }) => {
   return (
-    <div className="dnd-card shadows mb-3 p-2">
+    <div className="dnd-card shadows mb-3 p-1">
       <div className="d-flex justify-content-between">
         <div className="d-flex align-items-center">
           <DragHandle />
@@ -98,46 +98,47 @@ const Lecture = sortableElement(({ value, cancel }) => (
       <h6 className="m-0">{value}</h6>
     </div>
 
-    <div className="row mt-3 ml-3">
-      <div className="col-7">
-        <input
-          className="lecture-input"
-          placeholder="e.g learn javascript from scratch"
-        />
+    <div className="row mt-3 px-3">
+      <div className="col-lg-7">
+        <div className="form-group">
+          <label>Lecture Title</label>
+          <input
+            className="lecture-input"
+            placeholder="e.g learn javascript from scratch"
+          />
+        </div>
       </div>
       <div className="col">
-        <input type="file" className="lecture-input" />
+        <div className="form-group">
+          <label>Thumbnail</label>
+          <input type="file" className="lecture-input" />
+        </div>
       </div>
+    </div>
+    <div className="form-group px-3">
+      <label>Embed Link Video</label>
+      <input className="lecture-input" placeholder="Insert Embed Link Video" />
+    </div>
+    <div className="form-group px-3">
+      <label>Description</label>
+      <textarea
+        style={{ height: 100, resize: "none" }}
+        className="lecture-input pt-1"
+        placeholder="Briefly describe this course"
+      />
+      <button className="btn main-btn">Save</button>
     </div>
   </div>
 ));
 
 class CourseCuriculum extends Component {
   state = {
-    section: ["Section 1"],
     data: [
       {
-        name: "Course 1",
+        name: "Section 1",
         lectures: [
           {
             name: "Node Js",
-            embed: "https://google.com"
-          },
-          {
-            name: "PHP",
-            embed: "https://google.com"
-          }
-        ]
-      },
-      {
-        name: "Course 2",
-        lectures: [
-          {
-            name: "Node Js",
-            embed: "https://google.com"
-          },
-          {
-            name: "PHP",
             embed: "https://google.com"
           }
         ]
@@ -151,11 +152,25 @@ class CourseCuriculum extends Component {
     }));
   };
 
+  onSortLecture = ({ oldIndex, newIndex }) => {
+    this.setState(({ data }) => ({
+      data: arrayMove(data, oldIndex, newIndex)
+    }));
+  };
+
   addSection = () => {
-    const key = this.state.section.length;
-    let section = this.state.section;
-    section.push(`Section ${key + 1}`);
-    this.setState({ section });
+    const key = this.state.data.length;
+    let data = this.state.data;
+    data.push({
+      name: `Section ${key+1}`,
+      lectures: [
+        {
+          name: "Node Js",
+          embed: "https://google.com"
+        }
+      ]
+    });
+    this.setState({ data });
   };
 
   cancel = e => {
@@ -176,24 +191,34 @@ class CourseCuriculum extends Component {
               <h5>Curriculum</h5>
               <button className="btn main-btn">Submit Course</button>
             </div>
-            <SortableContainer onSortEnd={this.onSortEnd} useDragHandle>
+            <SortableContainer onSortEnd={this.onSortLecture} useDragHandle>
               {this.state.data.map((value, index) => (
                 <Section
-                  key={`item-${value}`}
+                  onSortEnd={this.onSortEnd}
+                  useDragHandle
+                  key={`item-${index + 1}`}
                   index={index}
                   value={value.name}
                   cancel={this.cancel}
                 >
-                  {value.lectures.map((value, index) => (
-                    <Lecture
-                      key={`item-${index + 1}`}
-                      index={index}
-                      value={value.name}
-                    />
-                  ))}
+                  <div>
+                    {value.lectures.map((value, index) => (
+                      <Lecture
+                        key={`item-${index + 1}`}
+                        index={index}
+                        value={value.name}
+                      />
+                    ))}
+                    <div style={{ margin: 10 }}>
+                      <button className="btn btn-addmore btn-block">
+                        New Lecture
+                      </button>
+                    </div>
+                  </div>
                 </Section>
               ))}
             </SortableContainer>
+
             <button onClick={this.addSection} className="btn add-new btn-block">
               Add New Section
             </button>
