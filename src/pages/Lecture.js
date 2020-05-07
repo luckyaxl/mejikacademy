@@ -59,46 +59,108 @@ const SortableContainer = sortableContainer(({ children }) => {
 });
 
 const DragHandle = sortableHandle(() => (
-  <span>
+  <span className="mr-2">
     <img src={sharp} alt="..." />{" "}
   </span>
 ));
 
-const SortableItem = sortableElement(({ value, cancel }) => (
-  <div className="d-flex dnd-card mb-3 p-3 shadows justify-content-between">
+const Section = sortableElement(({ value, cancel, children }) => {
+  return (
+    <div className="dnd-card shadows mb-3 p-2">
+      <div className="d-flex justify-content-between">
+        <div className="d-flex align-items-center">
+          <DragHandle />
+          <h6 className="m-0">{value}</h6>
+        </div>
+
+        {/**
+        <div className="d-flex align-items-center">
+          <button
+            id={value}
+            onClick={cancel}
+            className="btn main-btn-outline mr-2"
+          >
+            Cancel
+          </button>
+          <button className="btn main-btn">Add Section</button>
+        </div>
+         */}
+      </div>
+      <div>{children}</div>
+    </div>
+  );
+});
+
+const Lecture = sortableElement(({ value, cancel }) => (
+  <div className="child-card ">
     <div className="d-flex align-items-center">
       <DragHandle className="mr-3" />
       <h6 className="m-0">{value}</h6>
     </div>
 
-    <div className="d-flex align-items-center">
-      <button onClick={cancel} className="btn main-btn-outline mr-2">Cancel</button>
-      <button className="btn main-btn">Add Section</button>
+    <div className="row mt-3 ml-3">
+      <div className="col-7">
+        <input
+          className="lecture-input"
+          placeholder="e.g learn javascript from scratch"
+        />
+      </div>
+      <div className="col">
+        <input type="file" className="lecture-input" />
+      </div>
     </div>
   </div>
 ));
 
 class CourseCuriculum extends Component {
   state = {
-    section: ["Section 1"]
+    section: ["Section 1"],
+    data: [
+      {
+        name: "Course 1",
+        lectures: [
+          {
+            name: "Node Js",
+            embed: "https://google.com"
+          },
+          {
+            name: "PHP",
+            embed: "https://google.com"
+          }
+        ]
+      },
+      {
+        name: "Course 2",
+        lectures: [
+          {
+            name: "Node Js",
+            embed: "https://google.com"
+          },
+          {
+            name: "PHP",
+            embed: "https://google.com"
+          }
+        ]
+      }
+    ]
   };
 
   onSortEnd = ({ oldIndex, newIndex }) => {
-    this.setState(({ section }) => ({
-      section: arrayMove(section, oldIndex, newIndex)
+    this.setState(({ data }) => ({
+      data: arrayMove(data, oldIndex, newIndex)
     }));
   };
 
   addSection = () => {
-    const key = this.state.section.length
+    const key = this.state.section.length;
     let section = this.state.section;
-    section.push( `Section ${key + 1}` );
+    section.push(`Section ${key + 1}`);
     this.setState({ section });
   };
 
-  cancel = (e) => {
-    console.log(e.target)
-  }
+  cancel = e => {
+    console.log(e.target.id);
+  };
 
   render() {
     const id = this.props.match.params.id;
@@ -115,13 +177,21 @@ class CourseCuriculum extends Component {
               <button className="btn main-btn">Submit Course</button>
             </div>
             <SortableContainer onSortEnd={this.onSortEnd} useDragHandle>
-              {this.state.section.map((value, index) => (
-                <SortableItem
+              {this.state.data.map((value, index) => (
+                <Section
                   key={`item-${value}`}
                   index={index}
-                  value={value}
+                  value={value.name}
                   cancel={this.cancel}
-                />
+                >
+                  {value.lectures.map((value, index) => (
+                    <Lecture
+                      key={`item-${index + 1}`}
+                      index={index}
+                      value={value.name}
+                    />
+                  ))}
+                </Section>
               ))}
             </SortableContainer>
             <button onClick={this.addSection} className="btn add-new btn-block">
