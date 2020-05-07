@@ -18,6 +18,9 @@ const GET_COURSE = gql`
 `;
 
 class MyCourse extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     return (
       <>

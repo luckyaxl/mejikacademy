@@ -18,7 +18,7 @@ class Navbar extends Component {
             <img style={{ height: 40 }} src={logosm} alt="..." />
           </Link>
           {title && title.length > 0 ? (
-            <h4 className="titlebar lectures mb-0">{title}</h4>
+            <h5 className="titlebar lectures mb-0">{title}</h5>
           ) : (
             <input
               type="text"

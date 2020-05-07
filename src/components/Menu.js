@@ -4,31 +4,40 @@ import Profile from "./Dropdown/Profile";
 
 class Menu extends Component {
   componentDidMount() {
-    localStorage.setItem("student", true);
+    const active = localStorage.getItem("active");
+    if (!active) {
+      localStorage.setItem("active", "student");
+    }
   }
 
   handleClick = () => {
-    const student = localStorage.getItem("student");
+    const active = localStorage.getItem("active");
+    const rev = active === "student" ? "instructor" : "student";
+    localStorage.setItem("active", rev);
+    window.location.href = "/";
   };
 
   render() {
-    const student = localStorage.getItem("student");
-    //console.log(student)
+    const active = localStorage.getItem("active");
 
     return (
       <div className="d-flex lectures">
-        <Link to="/mycourse">
-          <button className="btn btn-link mr-3 text-dark">My Course</button>
-        </Link>
+        {active === "student" ? (
+          <Link to="/courses">
+            <button className="btn btn-link mr-3 text-dark">My Course</button>
+          </Link>
+        ) : null}
 
-        <Link to={student ? "/mycourse" : "/instructor"}>
-          <button
-            onClick={this.handleClick}
-            className="btn main-btn-outline mr-3"
-          >
-            {student ? "Switch to Intructor View" : "Switch to Student View"}
-          </button>
-        </Link>
+        <button
+          onClick={this.handleClick}
+          className="btn main-btn-outline mr-3"
+        >
+          {active === "student"
+            ? "Switch to Intructor View"
+            : active === "instructor"
+            ? "Switch to Student View"
+            : null}
+        </button>
         <Profile />
       </div>
     );

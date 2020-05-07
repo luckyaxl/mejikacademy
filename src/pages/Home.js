@@ -16,7 +16,7 @@ const GET_COURSE = gql`
     }
   }
 `;
- 
+
 const Courses = () => (
   <Query query={GET_COURSE}>
     {({ error, loading, data }) => {
@@ -31,12 +31,17 @@ const Courses = () => (
                 <div className="course-card">
                   <img
                     className="course-img"
-                    src={course.cover || "https://udemycouponcodes.com/wp-content/uploads/2018/09/node-with-react.jpg"}
+                    src={
+                      course.cover ||
+                      "https://gotrips.lk/site/images/uploads/img.jpg"
+                    }
                     alt="..."
                   />
                   <div className="desc">
                     <h6>{course.title}</h6>
-                    <p className="mb-0">{course.description || "no descriptions"}</p>
+                    <p className="mb-0">
+                      {course.description || "no descriptions"}
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -49,6 +54,9 @@ const Courses = () => (
 );
 
 class Home extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     return (
       <>

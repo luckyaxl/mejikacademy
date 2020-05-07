@@ -10,15 +10,21 @@ import Forgot from "./pages/Auth/Forgot";
 
 import Learning from "./pages/Learning";
 
-import MyCourse from "./pages/MyCourse";
+import Courses from "./pages/Courses";
 import Instructor from "./pages/Instructor";
 import Lecture from "./pages/Lecture";
 
 class App extends Component {
   render() {
+    const active = localStorage.getItem("active");
     return (
       <Router>
-        <Route exact path="/" component={Home} />
+        {active === "student" ? (
+          <Route exact path="/" component={Home} />
+        ) : (
+          <Route exact path="/" component={Instructor} />
+        )}
+
         <Route path="/course/:id" component={Course} />
         <Route path="/learning/:id" component={Learning} />
 
@@ -26,8 +32,7 @@ class App extends Component {
         <Route path="/register" component={Register} />
         <Route path="/forgot-password" component={Forgot} />
 
-        <Route path="/mycourse" component={MyCourse} />
-        <Route path="/instructor" component={Instructor} />
+        <Route path="/courses" component={Courses} />
         <Route path="/lecture/:id" component={Lecture} />
       </Router>
     );

@@ -8,20 +8,18 @@ import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
 
 const GET_COURSE = gql`
-  {
-    courses(orderBy: createdAt_DESC) {
+  query courses($createdById: String!) {
+    courses(where: { id: $createdById }) {
       id
       title
       cover
-      description
-      createdAt
     }
   }
 `;
 
-const List = () => (
-  <Query query={GET_COURSE}>
-    {({ error, loading, data }) => {
+const List = ({ createdById }) => (
+  <Query query={GET_COURSE} variables={{ createdById }}>
+    {(error, loading, data) => {
       if (error) return `Error! ${error.message}`;
       if (loading) return "Loading...";
 
@@ -29,16 +27,19 @@ const List = () => (
         <>
           {data.courses.map((course, id) => (
             <div className="col-6 col-lg-3 px-2 mb-3" key={id}>
-              <Link to={`/lecture/${course.id}`}>
+              <Link to={`/course/${course.id}`}>
                 <div className="course-card">
                   <img
                     className="course-img"
-                    src={course.cover || "https://udemycouponcodes.com/wp-content/uploads/2018/09/node-with-react.jpg"}
+                    src={
+                      course.cover ||
+                      "https://udemycouponcodes.com/wp-content/uploads/2018/09/node-with-react.jpg"
+                    }
                     alt="..."
                   />
                   <div className="desc">
                     <h6>{course.title}</h6>
-                    <p className="mb-0">{course.description || "no descriptions"}</p>
+                    <p className="mb-0">{course.description}</p>
                   </div>
                 </div>
               </Link>
@@ -57,6 +58,9 @@ class Instructor extends Component {
       data: ["halo", "ini"],
       open: false
     };
+  }
+  componentDidMount() {
+    window.scrollTo(0, 0);
   }
   render() {
     const data = this.state.data;
@@ -87,7 +91,7 @@ class Instructor extends Component {
             </button>
           </div>
           <div className="row px-2">
-            <List />
+            <List createdById={"5eb26541a0005300baa9c5bf"} />
           </div>
         </div>
       </>

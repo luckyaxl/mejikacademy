@@ -59,6 +59,9 @@ const GET_COURSE = gql`
 `;
 
 class Course extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   render() {
     const id = this.props.match.params.id;
     return (

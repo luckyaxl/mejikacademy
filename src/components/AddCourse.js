@@ -85,7 +85,6 @@ class AddCourse extends Component {
       <Modal centered {...this.props} className="custom-map-modal">
         <div className="p-3">
           <h5>Create New Course</h5>
-
           <Mutation mutation={CREATE}>
             {createCourse => (
               <form onSubmit={event => this.handleSubmit(createCourse, event)}>
@@ -102,11 +101,11 @@ class AddCourse extends Component {
                 </div>
                 <div className="form-group">
                   <label className="small bold">Description</label>
-                  <textarea
+                  <textarea 
                     name="description"
                     onChange={this.handleChange}
                     value={state.data.description}
-                    style={{ paddingTop: 10, height: 100 }}
+                    style={{ paddingTop: 10, height: 100, resize: 'none' }}
                     className="main-form"
                     placeholder="Briefly describe this course.."
                     type="text"

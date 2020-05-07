@@ -13,3 +13,13 @@ export const getToken = () => {
     return false
   }
 };
+
+// CHECK IF TOKEN AVAILABLE
+export const removeToken = () => {
+  try {
+    Cookies.remove("token");
+  } catch (error) {
+    return false
+  }
+};
+

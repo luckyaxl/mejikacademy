@@ -37,14 +37,14 @@ const AddLectures = ({ id }) => (
           <div className="mr-3">
             <img
               className="course-img img-card"
-              src={data.course.cover}
+              src={data.course.cover || "https://gotrips.lk/site/images/uploads/img.jpg"}
               alt="..."
             />
           </div>
           <div>
             <div style={{ maxWidth: "90%" }}>
-              <h5>{data.course.title}</h5>
-              <p>{data.course.description}</p>
+              <h5>{data.course.title || "no title"}</h5>
+              <p>{data.course.description || "no description"}</p>
             </div>
             <button className="btn main-btn-sm main-btn-outline">
               Edit Course
@@ -159,6 +159,11 @@ class CourseCuriculum extends Component {
       }
     ]
   };
+
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState(({ data }) => ({

@@ -15,6 +15,9 @@ const GET_COURSE = gql`
       cover
       description
       createdAt
+      createdBy {
+        firstName
+      }
     }
   }
 `;
@@ -31,6 +34,10 @@ class Course extends Component {
     };
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   toggle = index => () => {
     this.setState({ [`block${index}`]: !this.state[`block${index}`] });
   };
@@ -44,10 +51,10 @@ class Course extends Component {
     });
   };
 
-  handleClick = (e) => {
+  handleClick = e => {
     //Require Auth Token
     const status = getToken();
-    const id = e.target.id
+    const id = e.target.id;
     if (status) {
       this.props.history.push(`/learning/${id}`);
     } else {
@@ -79,7 +86,7 @@ class Course extends Component {
                     <div className="col-lg-7 mb-3">
                       <div>
                         <h5>{data.course.title}</h5>
-                        <p>{data.course.description}</p>
+                        <p>{data.course.description || "no description"}</p>
                       </div>
                       <button
                         id={id}
@@ -94,7 +101,7 @@ class Course extends Component {
                         className="img-fluid card"
                         src={
                           data.course.cover ||
-                          "https://i.ytimg.com/vi/DLX62G4lc44/maxresdefault.jpg"
+                          "https://gotrips.lk/site/images/uploads/img.jpg"
                         }
                         alt="..."
                       />
