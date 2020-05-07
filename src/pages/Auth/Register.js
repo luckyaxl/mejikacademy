@@ -12,32 +12,6 @@ import { setToken } from "../../utils/config";
 import { validateEmail } from "../../utils/validate";
 import gql from "graphql-tag";
 
-const REGISTER = gql`
-  mutation register(
-    $email: EmailAddress!
-    $password: String!
-    $firstName: String!
-    $lastName: String!
-    $phoneNumber: PhoneNumber!
-  ) {
-    register(
-      input: {
-        email: $email
-        password: $password
-        firstName: $firstName
-        lastName: $lastName
-        phoneNumber: $phoneNumber
-      }
-    ) {
-      token
-      user {
-        role
-        id
-      }
-    }
-  }
-`;
-
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -247,5 +221,31 @@ class Register extends Component {
     );
   }
 }
+
+const REGISTER = gql`
+  mutation register(
+    $email: EmailAddress!
+    $password: String!
+    $firstName: String!
+    $lastName: String!
+    $phoneNumber: PhoneNumber!
+  ) {
+    register(
+      input: {
+        email: $email
+        password: $password
+        firstName: $firstName
+        lastName: $lastName
+        phoneNumber: $phoneNumber
+      }
+    ) {
+      token
+      user {
+        role
+        id
+      }
+    }
+  }
+`;
 
 export default Register;

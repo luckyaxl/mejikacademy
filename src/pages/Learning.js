@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
-
 import ReactPlayer from "react-player";
 import Navbar from "../components/Navbar";
-import AccordionItem from "../components/AccordionItem";
+import AccordionLearning from "../components/AccordionLearning";
 const paragraph = "What You'll Get in This Course";
 
 const data = [
@@ -45,17 +44,6 @@ const data = [
     paragraph
   }
 ];
-
-const GET_COURSE = gql`
-  query course($id: String!) {
-    course(id: $id) {
-      title
-      cover
-      description
-      createdAt
-    }
-  }
-`;
 
 // const GET_SECTION = gql`
 //   query sections($courseId: String!) {
@@ -146,7 +134,7 @@ class Course extends Component {
                     {data.map((data, key) => {
                       return (
                         <li className="accordion-list__item" key={key}>
-                          <AccordionItem {...data} />
+                          <AccordionLearning {...data} />
                         </li>
                       );
                     })}
@@ -160,5 +148,16 @@ class Course extends Component {
     );
   }
 }
+
+const GET_COURSE = gql`
+  query course($id: String!) {
+    course(id: $id) {
+      title
+      cover
+      description
+      createdAt
+    }
+  }
+`;
 
 export default Course;

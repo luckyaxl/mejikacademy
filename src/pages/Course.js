@@ -1,26 +1,9 @@
 import React, { Component } from "react";
-
 import Navbar from "../components/Navbar";
-import Accordion from "../components/Accordion2";
-
+import AccordionCourse from "../components/AccordionCourse";
+import { getToken } from "../utils/auth";
 import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
-import { getToken } from "../utils/auth";
-
-const GET_COURSE = gql`
-  query course($id: String!) {
-    course(id: $id) {
-      id
-      title
-      cover
-      description
-      createdAt
-      createdBy {
-        firstName
-      }
-    }
-  }
-`;
 
 class Course extends Component {
   constructor(props) {
@@ -129,7 +112,7 @@ class Course extends Component {
             <div>
               <div className="accordion">
                 {accordionList.map((item, index) => (
-                  <Accordion
+                  <AccordionCourse
                     key={index}
                     title={item.title}
                     onClick={this.toggle(index + 1)}
@@ -147,5 +130,20 @@ class Course extends Component {
     );
   }
 }
+
+const GET_COURSE = gql`
+  query course($id: String!) {
+    course(id: $id) {
+      id
+      title
+      cover
+      description
+      createdAt
+      createdBy {
+        firstName
+      }
+    }
+  }
+`;
 
 export default Course;

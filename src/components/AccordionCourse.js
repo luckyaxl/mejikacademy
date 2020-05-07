@@ -3,7 +3,7 @@ import plus from "../assets/images/plus.svg";
 import minus from "../assets/images/minus.svg";
 import play from "../assets/images/play.svg";
 
-class Accordion extends React.Component {
+class AccordionCourse extends React.Component {
   render() {
     const { title, expand, onClick } = this.props;
 
@@ -72,4 +72,4 @@ class Accordion extends React.Component {
   }
 }
 
-export default Accordion;
+export default AccordionCourse;

@@ -17,18 +17,6 @@ import { validateEmail } from "../../utils/validate";
 
 import gql from "graphql-tag";
 
-const LOGIN = gql`
-  mutation login($email: EmailAddress!, $password: String) {
-    login(input: { email: $email, password: $password }) {
-      token
-      user {
-        role
-        id
-      }
-    }
-  }
-`;
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -220,5 +208,17 @@ class Login extends Component {
     );
   }
 }
+
+const LOGIN = gql`
+  mutation login($email: EmailAddress!, $password: String) {
+    login(input: { email: $email, password: $password }) {
+      token
+      user {
+        role
+        id
+      }
+    }
+  }
+`;
 
 export default Login;

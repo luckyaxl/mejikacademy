@@ -1,10 +1,58 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
 import Navbar from "../components/Navbar";
-
 import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
+
+class Home extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+  render() {
+    return (
+      <>
+        <Navbar />
+        <div className="home container main-content">
+          <div className="row px-2">
+            <Query query={GET_COURSE}>
+              {({ error, loading, data }) => {
+                if (error) return `Error! ${error.message}`;
+                if (loading) return <div className="loading" />;
+
+                return (
+                  <>
+                    {data.courses.map((course, id) => (
+                      <div className="col-6 col-lg-3 px-2 mb-3" key={id}>
+                        <Link to={`/course/${course.id}`}>
+                          <div className="course-card">
+                            <img
+                              className="course-img"
+                              src={
+                                course.cover ||
+                                "https://gotrips.lk/site/images/uploads/img.jpg"
+                              }
+                              alt="..."
+                            />
+                            <div className="desc">
+                              <h6>{course.title}</h6>
+                              <p className="mb-0">
+                                {course.description || "no descriptions"}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      </div>
+                    ))}
+                  </>
+                );
+              }}
+            </Query>
+          </div>
+        </div>
+      </>
+    );
+  }
+}
 
 const GET_COURSE = gql`
   {
@@ -17,59 +65,5 @@ const GET_COURSE = gql`
     }
   }
 `;
-
-const Courses = () => (
-  <Query query={GET_COURSE}>
-    {({ error, loading, data }) => {
-      if (error) return `Error! ${error.message}`;
-      if (loading) return <div className="loading" />;
-
-      return (
-        <>
-          {data.courses.map((course, id) => (
-            <div className="col-6 col-lg-3 px-2 mb-3" key={id}>
-              <Link to={`/course/${course.id}`}>
-                <div className="course-card">
-                  <img
-                    className="course-img"
-                    src={
-                      course.cover ||
-                      "https://gotrips.lk/site/images/uploads/img.jpg"
-                    }
-                    alt="..."
-                  />
-                  <div className="desc">
-                    <h6>{course.title}</h6>
-                    <p className="mb-0">
-                      {course.description || "no descriptions"}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </>
-      );
-    }}
-  </Query>
-);
-
-class Home extends Component {
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-  render() {
-    return (
-      <>
-        <Navbar />
-        <div className="home container main-content">
-          <div className="row px-2">
-            <Courses />
-          </div>
-        </div>
-      </>
-    );
-  }
-}
 
 export default Home;

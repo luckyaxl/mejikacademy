@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-//import check from "../assets/images/check.svg";
 import play from "../assets/images/play.svg";
 
-class AccordionItem extends Component {
+class AccordionLearning extends Component {
   state = {
     opened: false
   };
@@ -39,4 +38,4 @@ class AccordionItem extends Component {
   }
 }
 
-export default AccordionItem;
+export default AccordionLearning;

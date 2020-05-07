@@ -1,22 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Add from "../components/AddCourse";
+import AddCourse from "../components/AddCourse";
 import Empty from "../components/EmptyCourse";
-import { getID } from "../utils/auth";
-
+import { getID } from "../utils/config";
 import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
-
-const GET_COURSE = gql`
-  query courses($createdById: String!) {
-    courses(where: { id: $createdById }) {
-      id
-      title
-      cover
-    }
-  }
-`;
 
 const List = ({ createdById }) => (
   <Query query={GET_COURSE} variables={{ createdById }}>
@@ -76,7 +65,7 @@ class Instructor extends Component {
 
     return (
       <>
-        <Add
+        <AddCourse
           show={this.state.open}
           onHide={() => this.setState({ open: !this.state.open })}
         />
@@ -99,5 +88,15 @@ class Instructor extends Component {
     );
   }
 }
+
+const GET_COURSE = gql`
+  query courses($createdById: String!) {
+    courses(where: { id: $createdById }) {
+      id
+      title
+      cover
+    }
+  }
+`;
 
 export default Instructor;
