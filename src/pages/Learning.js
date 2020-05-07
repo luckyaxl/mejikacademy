@@ -13,15 +13,35 @@ const data = [
     paragraph
   },
   {
-    title: "How to apply",
+    title: "What You'll Get in This Course",
     paragraph
   },
   {
-    title: "Purchasing process",
+    title: "How to Get the Most Out of the Course",
     paragraph
   },
   {
-    title: "Usage guides",
+    title: "How Does the Internet Actually Work?",
+    paragraph
+  },
+  {
+    title: "How Do Websites Actually Work?",
+    paragraph
+  },
+  {
+    title: "What You'll Need to Get Started",
+    paragraph
+  },
+  {
+    title: "How to Get Help When You're Stuck",
+    paragraph
+  },
+  {
+    title: "Introduction to HTML",
+    paragraph
+  },
+  {
+    title: "Intermediate HTML",
     paragraph
   }
 ];

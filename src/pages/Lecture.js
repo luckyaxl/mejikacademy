@@ -66,9 +66,9 @@ const DragHandle = sortableHandle(() => (
   </span>
 ));
 
-const Section = sortableElement(({ value, cancel, index, children }) => {
+const Section = sortableElement(({ value, cancel, children }) => {
   return (
-    <div className="dnd-card shadows mb-3 p-1">
+    <div className="dnd-card shadows mb-3 p-2">
       <div className="d-flex justify-content-between">
         <div className="d-flex align-items-center">
           <DragHandle />
@@ -104,7 +104,7 @@ const Section = sortableElement(({ value, cancel, index, children }) => {
   );
 });
 
-const Lecture = sortableElement(({ value, cancel }) => (
+const Lecture = sortableElement(({ value }) => (
   <div className="child-card ">
     <div className="d-flex align-items-center">
       <DragHandle className="mr-3" />
@@ -146,6 +146,7 @@ const Lecture = sortableElement(({ value, cancel }) => (
 
 class CourseCuriculum extends Component {
   state = {
+    show: false,
     data: [
       {
         name: "Section 1",
@@ -188,15 +189,12 @@ class CourseCuriculum extends Component {
 
   cancel = e => {
     const value = e.target.value;
-    //const data = this.state.data;
-
     var checked = this.state.data;
     var values = checked.indexOf(value);
     checked.splice(values, 1);
     this.setState({ data: checked });
-    console.log(this.state.data);
   };
-
+  
   render() {
     const id = this.props.match.params.id;
     return (
@@ -211,24 +209,20 @@ class CourseCuriculum extends Component {
               <h5>Curriculum</h5>
               <button className="btn main-btn">Submit Course</button>
             </div>
-            <SortableContainer onSortEnd={this.onSortLecture} useDragHandle>
+
+            <SortableContainer onSortEnd={this.onSortEnd} useDragHandle>
               {this.state.data.map((value, index) => (
                 <Section
-                  onSortEnd={this.onSortEnd}
-                  useDragHandle
                   key={`item-${index + 1}`}
                   index={index}
                   value={value.name}
                   cancel={this.cancel}
                 >
                   <div>
-                    {value.lectures.map((value, index) => (
-                      <Lecture
-                        key={`item-${index + 1}`}
-                        index={index}
-                        value={value.name}
-                      />
+                    {value.lectures.map((value, i) => (
+                      <Lecture value={value.name} />
                     ))}
+
                     <div style={{ margin: 10 }}>
                       <button className="btn btn-addmore btn-block">
                         New Lecture
