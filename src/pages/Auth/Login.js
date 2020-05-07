@@ -2,7 +2,7 @@
 
 /** Docs https://www.apollographql.com/docs/react/data/mutations/ */
 
-import React, { Component } from "react"; 
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import Splash from "../../components/Splash";
@@ -99,7 +99,9 @@ class Login extends Component {
               <div>
                 <div className="card-body px-lg-5 py-lg-5">
                   <div className="__logo mb-4">
-                    <img src={logo} alt="..." />
+                    <Link to="/">
+                      <img src={logo} alt="..." />
+                    </Link>
                   </div>
                   <div className="text-center text-white">
                     <h3>Login</h3>
@@ -164,7 +166,10 @@ class Login extends Component {
                             </label>
                           </div>
                           <Link to="/forgot-password">
-                            <button type="button" className="btn btn-link small p-0 text-warning">
+                            <button
+                              type="button"
+                              className="btn btn-link small p-0 text-warning"
+                            >
                               <small>Forgotten your password</small>
                             </button>
                           </Link>
@@ -186,7 +191,10 @@ class Login extends Component {
                             Don't have an account yet?{" "}
                           </small>
                           <Link to="/register">
-                            <button type="button" className="btn btn-link text-warning p-0">
+                            <button
+                              type="button"
+                              className="btn btn-link text-warning p-0"
+                            >
                               <small className="bold">Register here</small>
                             </button>
                           </Link>

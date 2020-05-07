@@ -41,7 +41,9 @@ class Forgot extends Component {
               <div>
                 <div className="card-body px-lg-5 py-lg-5">
                   <div className="__logo mb-4">
-                    <img src={logo} alt="..." />
+                    <Link to="/">
+                      <img src={logo} alt="..." />
+                    </Link>
                   </div>
                   <div className="text-center text-white">
                     <h3>Forgot Password</h3>
