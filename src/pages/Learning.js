@@ -57,50 +57,50 @@ const GET_COURSE = gql`
   }
 `;
 
-const GET_SECTION = gql`
-  query sections($courseId: String!) {
-    sections(where: { courseId: $courseId }) {
-      id
-      title
-      createdBy {
-        firstName
-      }
-      lectures {
-        id
-        title
-        thumbnail
-        embedLink
-        description
-      }
-      course {
-        title
-        id
-      }
-    }
-  }
-`;
+// const GET_SECTION = gql`
+//   query sections($courseId: String!) {
+//     sections(where: { courseId: $courseId }) {
+//       id
+//       title
+//       createdBy {
+//         firstName
+//       }
+//       lectures {
+//         id
+//         title
+//         thumbnail
+//         embedLink
+//         description
+//       }
+//       course {
+//         title
+//         id
+//       }
+//     }
+//   }
+// `;
 
-const Section = ({ courseId }) => (
-  <Query query={GET_SECTION} variables={{ courseId }}>
-    {(error, loading, sections) => {
-      if (error) return `Error! ${error.message}`;
-      if (loading) return "Loading...";
+// const Section = ({ courseId }) => (
+//   <Query query={GET_SECTION} variables={{ courseId }}>
+//     {(error, loading, sections) => {
+//       if (error) return `Error! ${error.message}`;
+//       if (loading) return "Loading...";
 
-      return (
-        <>
-          {data &&
-            sections.map((data, key) => {
-              return (
-                <li className="accordion-list__item" key={key}>
-                  <AccordionItem {...data} />
-                </li>
-              );
-            })}
-        </>
-      );
-    }}
-  </Query>
-);
+//       return (
+//         <>
+//           {data &&
+//             sections.map((data, key) => {
+//               return (
+//                 <li className="accordion-list__item" key={key}>
+//                   <AccordionItem {...data} />
+//                 </li>
+//               );
+//             })}
+//         </>
+//       );
+//     }}
+//   </Query>
+// );
 
 class Course extends Component {
   componentDidMount() {
@@ -143,7 +143,6 @@ class Course extends Component {
                         Course Content
                       </h5>
                     </div>
-                    {/** */}
                     {data.map((data, key) => {
                       return (
                         <li className="accordion-list__item" key={key}>

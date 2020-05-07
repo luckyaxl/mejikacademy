@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Add from "../components/AddCourse";
 import Empty from "../components/EmptyCourse";
+import { getID } from "../utils/auth";
 
 import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
@@ -91,7 +92,7 @@ class Instructor extends Component {
             </button>
           </div>
           <div className="row px-2">
-            <List createdById={"5eb26541a0005300baa9c5bf"} />
+            <List createdById={getID()} />
           </div>
         </div>
       </>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 
 import { Query } from "@apollo/react-components";
@@ -21,7 +22,7 @@ const Courses = () => (
   <Query query={GET_COURSE}>
     {({ error, loading, data }) => {
       if (error) return `Error! ${error.message}`;
-      if (loading) return "Loading...";
+      if (loading) return <div className="loading" />;
 
       return (
         <>

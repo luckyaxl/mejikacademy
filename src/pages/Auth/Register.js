@@ -8,7 +8,7 @@ import eyes from "../../assets/images/eyes.svg";
 import eyesopn from "../../assets/images/eyesopn.svg";
 
 import { Mutation } from "@apollo/react-components";
-import { setToken } from "../../config";
+import { setToken } from "../../utils/config";
 import { validateEmail } from "../../utils/validate";
 import gql from "graphql-tag";
 
@@ -32,6 +32,7 @@ const REGISTER = gql`
       token
       user {
         role
+        id
       }
     }
   }
@@ -78,7 +79,8 @@ class Register extends Component {
         });
         const token = data.data.register.token;
         const role = data.data.register.user.role;
-        setToken(token, role);
+        const id = data.data.register.user.id;
+        setToken(token, role, id);
         this.props.history.replace("/");
       } else {
         console.log("Invalid Email");

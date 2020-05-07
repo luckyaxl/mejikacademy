@@ -12,7 +12,7 @@ import eyes from "../../assets/images/eyes.svg";
 import eyesopn from "../../assets/images/eyesopn.svg";
 
 import { Mutation } from "@apollo/react-components";
-import { setToken } from "../../config";
+import { setToken } from "../../utils/config";
 import { validateEmail } from "../../utils/validate";
 
 import gql from "graphql-tag";
@@ -23,6 +23,7 @@ const LOGIN = gql`
       token
       user {
         role
+        id
       }
     }
   }
@@ -64,7 +65,8 @@ class Login extends Component {
         });
         const token = data.data.login.token;
         const role = data.data.login.user.role;
-        setToken(token, role);
+        const id = data.data.login.user.id;
+        setToken(token, role, id);
         this.props.history.replace("/");
       } else {
         console.log("invalid email");

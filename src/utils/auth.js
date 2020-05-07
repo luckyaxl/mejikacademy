@@ -26,3 +26,12 @@ export const removeToken = () => {
   }
 };
 
+// GET ID
+export const getID = () => {
+  try {
+    const token = Cookies.get("id");
+    return token
+  } catch (error) {
+    return false
+  }
+}

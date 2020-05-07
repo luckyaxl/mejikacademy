@@ -2,20 +2,20 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-import { Query } from "@apollo/react-components";
-import gql from "graphql-tag";
+// import { Query } from "@apollo/react-components";
+// import gql from "graphql-tag";
 
-const GET_COURSE = gql`
-  query course($id: String!) {
-    course(id: $id) {
-      id
-      title
-      cover
-      description
-      createdAt
-    }
-  }
-`;
+// const GET_COURSE = gql`
+//   query course($id: String!) {
+//     course(id: $id) {
+//       id
+//       title
+//       cover
+//       description
+//       createdAt
+//     }
+//   }
+// `;
 
 class Courses extends Component {
   componentDidMount() {
