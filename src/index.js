@@ -1,4 +1,3 @@
-/** Docs https://www.apollographql.com/docs/react/networking/authentication/#header */
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -19,6 +18,7 @@ const link = createUploadLink({
   uri: "https://mejikacademy1588499516927.microgen.mejik.id/graphql"
 });
 
+/** Docs https://www.apollographql.com/docs/react/networking/authentication/#header */
 const authLink = setContext((_, { headers }) => {
   const token = Cookies.get("token");
   return {
