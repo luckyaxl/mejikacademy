@@ -64,6 +64,13 @@ input {
   font-family: "Product Sans Regular";
 }
 
+input, textarea {
+  transition-duration: 0.3s;
+  &:focus {
+    box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
+  }
+}
+
 .bold {
   font-weight: 600;
 }
@@ -214,6 +221,17 @@ input {
   display: inline-block;
   margin-top: 6px;
   border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  width: 13px;
+  height: 13px;
+  animation: spin 0.4s linear infinite;
+}
+
+.loader-dark {
+  display: inline-block;
+  margin-top: 6px;
+  border: 2px solid #8854d0;
   border-top: 2px solid transparent;
   border-radius: 50%;
   width: 13px;

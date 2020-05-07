@@ -5,6 +5,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import FadeIn from "react-fade-in";
 import Splash from "../../components/Splash";
 import logo from "../../assets/images/logo.svg";
 import eyes from "../../assets/images/eyes.svg";
@@ -98,110 +99,116 @@ class Login extends Component {
             <div className="col-lg-5" style={{ alignItems: "center" }}>
               <div>
                 <div className="card-body px-lg-5 py-lg-5">
-                  <div className="__logo mb-4">
-                    <Link to="/">
-                      <img src={logo} alt="..." />
-                    </Link>
-                  </div>
-                  <div className="text-center text-white">
-                    <h3>Login</h3>
-                    <p>Login and start managing your learning process!</p>
-                    {state.invalid ? (
-                      <small className="text-warning">
-                        Invalid Email or Password
-                      </small>
-                    ) : null}
-                  </div>
+                  <FadeIn>
+                    <div className="__logo mb-4">
+                      <Link to="/">
+                        <img src={logo} alt="..." />
+                      </Link>
+                    </div>
+                    <div className="text-center text-white">
+                      <h3>Login</h3>
+                      <p>Login and start managing your learning process!</p>
+                      {state.invalid ? (
+                        <small className="text-warning">
+                          Invalid Email or Password
+                        </small>
+                      ) : null}
+                    </div>
 
-                  <Mutation mutation={LOGIN}>
-                    {login => (
-                      <form onSubmit={event => this.handleSubmit(login, event)}>
-                        <div className="form-group mb-3">
-                          <label className="text-white small bold">Email</label>
-                          <input
-                            autoComplete="off"
-                            className="forms"
-                            placeholder="e.g najib@mail.com"
-                            type="email"
-                            name="email"
-                            onChange={this.handleChange}
-                            value={state.data.email}
-                          />
-                        </div>
-
-                        <div className="form-group mb-3">
-                          <label className="text-white small bold">
-                            Password
-                          </label>
-                          <img
-                            onClick={this.show}
-                            src={this.state.visible ? eyesopn : eyes}
-                            alt="..."
-                            className="errspan"
-                          />
-                          <input
-                            autoComplete="off"
-                            className="forms"
-                            placeholder="Input your password"
-                            type={this.state.visible ? "text" : "password"}
-                            name="password"
-                            onChange={this.handleChange}
-                            value={state.data.password}
-                          />
-                        </div>
-
-                        <div className="d-flex justify-content-between">
-                          <div className="custom-control custom-checkbox mr-3">
-                            <input
-                              className="custom-control-input"
-                              id="furnished"
-                              type="checkbox"
-                              value="Furnished"
-                            />
-                            <label
-                              className="custom-control-label text-white"
-                              htmlFor="furnished"
-                            >
-                              <small>Keep me signed in</small>
+                    <Mutation mutation={LOGIN}>
+                      {login => (
+                        <form
+                          onSubmit={event => this.handleSubmit(login, event)}
+                        >
+                          <div className="form-group mb-3">
+                            <label className="text-white small bold">
+                              Email
                             </label>
+                            <input
+                              autoComplete="off"
+                              className="forms"
+                              placeholder="e.g najib@mail.com"
+                              type="email"
+                              name="email"
+                              onChange={this.handleChange}
+                              value={state.data.email}
+                            />
                           </div>
-                          <Link to="/forgot-password">
+
+                          <div className="form-group mb-3">
+                            <label className="text-white small bold">
+                              Password
+                            </label>
+                            <img
+                              onClick={this.show}
+                              src={this.state.visible ? eyesopn : eyes}
+                              alt="..."
+                              className="errspan"
+                            />
+                            <input
+                              autoComplete="off"
+                              className="forms"
+                              placeholder="Input your password"
+                              type={this.state.visible ? "text" : "password"}
+                              name="password"
+                              onChange={this.handleChange}
+                              value={state.data.password}
+                            />
+                          </div>
+
+                          <div className="d-flex justify-content-between">
+                            <div className="custom-control custom-checkbox mr-3">
+                              <input
+                                className="custom-control-input"
+                                id="furnished"
+                                type="checkbox"
+                                value="Furnished"
+                              />
+                              <label
+                                className="custom-control-label text-white"
+                                htmlFor="furnished"
+                              >
+                                <small>Keep me signed in</small>
+                              </label>
+                            </div>
+                            <Link to="/forgot-password">
+                              <button
+                                type="button"
+                                className="btn btn-link small p-0 text-warning"
+                              >
+                                <small>Forgotten your password</small>
+                              </button>
+                            </Link>
+                          </div>
+                          <div className="text-center">
                             <button
-                              type="button"
-                              className="btn btn-link small p-0 text-warning"
+                              disabled={this.state.loading}
+                              type="submit"
+                              className="btn btn-block btn-warning my-4"
                             >
-                              <small>Forgotten your password</small>
+                              {this.state.loading && (
+                                <div className="loader"></div>
+                              )}
+                              {!this.state.loading && <span>Login</span>}
                             </button>
-                          </Link>
-                        </div>
-                        <div className="text-center">
-                          <button
-                            disabled={this.state.loading}
-                            type="submit"
-                            className="btn btn-block btn-warning my-4"
-                          >
-                            {this.state.loading && (
-                              <div className="loader"></div>
-                            )}
-                            {!this.state.loading && <span>Login</span>}
-                          </button>
-                        </div>
-                        <div className="text-center">
-                          <small className="text-warning">
-                            Don't have an account yet?{" "}
-                          </small>
-                          <Link to="/register">
-                            <button
-                              type="button"
-                              className="btn btn-link text-warning p-0"
-                            >
-                              <small className="bold">Register here</small>
-                            </button>
-                          </Link>
-                        </div>
-                      </form>
-                    )}
-                  </Mutation>
+                          </div>
+                          <div className="text-center">
+                            <small className="text-warning">
+                              Don't have an account yet?{" "}
+                            </small>
+                            <Link to="/register">
+                              <button
+                                type="button"
+                                className="btn btn-link text-warning p-0"
+                              >
+                                <small className="bold">Register here</small>
+                              </button>
+                            </Link>
+                          </div>
+                        </form>
+                      )}
+                    </Mutation>
+                  </FadeIn>
                 </div>
               </div>
             </div>
