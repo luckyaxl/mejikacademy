@@ -12,6 +12,7 @@ const CREATE = gql`
     createCourse(
       input: { title: $title, cover: $cover, description: $description }
     ) {
+      id
       title
       cover
       description

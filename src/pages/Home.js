@@ -7,7 +7,7 @@ import gql from "graphql-tag";
 
 const GET_COURSE = gql`
   {
-    courses(orderBy: createdAt_ASC) {
+    courses(orderBy: createdAt_DESC, limit: 50) {
       id
       title
       cover
