@@ -17,7 +17,7 @@ const GET_COURSE = gql`
   }
 `;
 
-class MyCourse extends Component {
+class Courses extends Component {
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -28,7 +28,7 @@ class MyCourse extends Component {
         <div className="home container main-content">
           <div className="row px-2">
             <div className="col-6 col-lg-3 px-2 mb-3">
-              <Link to="/courses/">
+              <Link to="/course/sjsd">
                 <div className="course-card">
                   <img
                     className="course-img"
@@ -49,4 +49,4 @@ class MyCourse extends Component {
   }
 }
 
-export default MyCourse;
+export default Courses;

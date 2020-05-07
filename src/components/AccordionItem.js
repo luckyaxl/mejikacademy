@@ -9,7 +9,7 @@ class AccordionItem extends Component {
 
   render() {
     const {
-      props: { paragraph, title },
+      props: { title, lectures },
       state: { opened }
     } = this;
 
@@ -30,7 +30,7 @@ class AccordionItem extends Component {
         <div className="accordion-item__inner">
           <div className="accordion-item__content">
             <p className="accordion-item__paragraph mt-3">
-              <img alt="..." src={play} className="mr-2" />{paragraph}
+              <img alt="..." src={play} className="mr-2" />{lectures}
             </p>
           </div>
         </div>

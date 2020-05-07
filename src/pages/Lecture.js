@@ -104,7 +104,7 @@ const Section = sortableElement(({ value, cancel, children }) => {
   );
 });
 
-const Lecture = sortableElement(({ value }) => (
+const Lectures = sortableElement(({ value }) => (
   <div className="child-card ">
     <div className="d-flex align-items-center">
       <DragHandle className="mr-3" />
@@ -144,7 +144,7 @@ const Lecture = sortableElement(({ value }) => (
   </div>
 ));
 
-class CourseCuriculum extends Component {
+class Lecture extends Component {
   state = {
     show: false,
     data: [
@@ -225,7 +225,7 @@ class CourseCuriculum extends Component {
                 >
                   <div>
                     {value.lectures.map((value, i) => (
-                      <Lecture value={value.name} />
+                      <Lectures key={i} value={value.name} />
                     ))}
 
                     <div style={{ margin: 10 }}>
@@ -248,4 +248,4 @@ class CourseCuriculum extends Component {
   }
 }
 
-export default CourseCuriculum;
+export default Lecture;

@@ -14,10 +14,13 @@ export const getToken = () => {
   }
 };
 
-// CHECK IF TOKEN AVAILABLE
+// REMOVE ALL COOKIE
 export const removeToken = () => {
   try {
     Cookies.remove("token");
+    Cookies.remove("role");
+    localStorage.clear();
+    return true
   } catch (error) {
     return false
   }

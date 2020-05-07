@@ -3,13 +3,6 @@ import { Link } from "react-router-dom";
 import Profile from "./Dropdown/Profile";
 
 class Menu extends Component {
-  componentDidMount() {
-    const active = localStorage.getItem("active");
-    if (!active) {
-      localStorage.setItem("active", "student");
-    }
-  }
-
   handleClick = () => {
     const active = localStorage.getItem("active");
     const rev = active === "student" ? "instructor" : "student";

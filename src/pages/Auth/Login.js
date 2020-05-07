@@ -63,11 +63,10 @@ class Login extends Component {
         });
         const token = data.data.login.token;
         const role = data.data.login.user.role;
-        console.log(role)
         setToken(token, role);
         this.props.history.replace("/");
       } else {
-        console.log("Invalid Email");
+        console.log("invalid email");
       }
     } catch (error) {
       console.log("Not Authenticated");
