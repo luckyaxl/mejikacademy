@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "../components/Navbar";
 
-import sharp from "../assets/images/sharp.svg";
-
 import {
   sortableContainer,
   sortableElement,
@@ -12,6 +10,10 @@ import arrayMove from "array-move";
 
 import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
+
+import sharp from "../assets/images/sharp.svg";
+import edit from "../assets/images/edit.svg";
+import remove from "../assets/images/delete.svg";
 
 const GET_COURSE = gql`
   query course($id: String!) {
@@ -64,13 +66,24 @@ const DragHandle = sortableHandle(() => (
   </span>
 ));
 
-const Section = sortableElement(({ value, cancel, children }) => {
+const Section = sortableElement(({ value, cancel, index, children }) => {
   return (
     <div className="dnd-card shadows mb-3 p-1">
       <div className="d-flex justify-content-between">
         <div className="d-flex align-items-center">
           <DragHandle />
           <h6 className="m-0">{value}</h6>
+
+          <div className="ml-3 d-flex">
+            <img src={edit} alt="..." className="btn-icon mr-2" />
+            <img
+              id={value}
+              onClick={cancel}
+              src={remove}
+              className="btn-icon"
+              alt="..."
+            />
+          </div>
         </div>
 
         {/**
@@ -162,7 +175,7 @@ class CourseCuriculum extends Component {
     const key = this.state.data.length;
     let data = this.state.data;
     data.push({
-      name: `Section ${key+1}`,
+      name: `Section ${key + 1}`,
       lectures: [
         {
           name: "Node Js",
@@ -174,7 +187,14 @@ class CourseCuriculum extends Component {
   };
 
   cancel = e => {
-    console.log(e.target.id);
+    const value = e.target.value;
+    //const data = this.state.data;
+
+    var checked = this.state.data;
+    var values = checked.indexOf(value);
+    checked.splice(values, 1);
+    this.setState({ data: checked });
+    console.log(this.state.data);
   };
 
   render() {

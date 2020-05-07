@@ -483,3 +483,11 @@ a:hover {
     background: darken(#f0f2f5, 4%);
   }
 }
+
+.btn-icon {
+  cursor: pointer;
+  &:hover {
+    background: #ddd;
+    border-radius: 45px;
+  }
+}
